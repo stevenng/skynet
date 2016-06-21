@@ -24,12 +24,38 @@ skynet.app = (function($){
 		console.log('Find John Connah!');
 	}
 
+	function scientists() {
+
+		var data = [];
+		var viewModel = {
+			people: ko.observableArray(data)
+		};
+
+		ko.applyBindings(viewModel);
+
+		$.ajax({
+	    url: "http://reqres.in/api/users",
+	    type: "GET",
+	    success: function(response){
+	    	console.log(response.data);
+	    	// update view models
+	    	viewModel.people(response.data);
+	    }
+		});
+
+	}
+
+
+
 	return {
 		init: init,
 		terminator: terminator,
-		objective: objective
+		objective: objective,
+		scientists: scientists
 	}
 
 })(jQuery);
 
 skynet.app.init();
+
+skynet.app.scientists();
